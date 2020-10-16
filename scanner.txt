@@ -1,0 +1,117 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:barcode_scan/barcode_scan.dart';
+import 'package:flutter/services.dart';
+
+import 'pdf/viewer_page.dart';
+
+class ScanWidget extends StatefulWidget {
+  @override
+  _ScanWidgetState createState() => _ScanWidgetState();
+}
+
+class _ScanWidgetState extends State<ScanWidget> {
+  final _formKey = GlobalKey<FormState>();
+  String result;
+
+  Future barcodeScan() async {
+    try {
+      String BCResult = (await BarcodeScanner.scan()) as String;
+      setState(() {
+        result = BCResult;
+      });
+    } on PlatformException catch (ex) {
+      if (ex.code == BarcodeScanner.cameraAccessDenied) {
+        setState(() {
+          result = "Camera permission was denied";
+        });
+      } else {
+        setState(() {
+          result = "Unknown error $ex";
+        });
+      }
+    } catch (ex) {
+
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Сканирование баркодов'),
+      ),
+      body: Container (
+        key: _formKey,
+        child: Scrollbar(
+          child: Align(
+              alignment: Alignment.topCenter,
+              child: Card(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.all(16),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 400),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        FloatingActionButton.extended (
+                          icon: Icon(Icons.camera_alt),
+                          label: Text ('Сканировать системный блок'),
+                          onPressed: barcodeScan,
+                          heroTag: null,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        FloatingActionButton.extended(
+                          icon: Icon( Icons.camera_alt),
+                          label: Text ('Сканировать монитор'),
+                          onPressed: barcodeScan,
+                          heroTag: null,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        FloatingActionButton.extended(
+                          icon: Icon( Icons.camera_alt),
+                          label: Text ('Сканировать клавиатуру'),
+                          onPressed: barcodeScan,
+                          heroTag: null,
+                        ),
+                        SizedBox(
+                          height: 10,
+                          child: Text(''),
+                        ),
+                        FloatingActionButton.extended(
+                          icon: Icon( Icons.camera_alt),
+                          label: Text ('Сканировать компьютерную мышь'),
+                          onPressed: barcodeScan,
+                          heroTag: null,
+                        ),
+                        SizedBox(
+                          height: 10,
+                          child: Text(''),
+                        ),
+                        Center(
+                          child: RaisedButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PdfViewerPage()));
+                            },
+                            child: Text('Продолжить'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+          ),
+        ),
+      ),
+    );
+  }
+}
