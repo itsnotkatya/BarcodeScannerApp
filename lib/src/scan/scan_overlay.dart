@@ -3,23 +3,31 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:scan2/src/scan/scan_form.dart';
 
 class QRFirstView extends StatefulWidget {
-   String Address;
+  String signCity;
+  String signDate;
+  String fioExecutor;
+  String fioDirector;
+  String Address;
    String Room;
    String ID;
-   QRFirstView(this.Address,this.Room,this.ID);
+   QRFirstView(this.signCity, this.Address,this.signDate, this.fioExecutor, this.fioDirector,this.Room,this.ID);
 
   @override
   State<StatefulWidget> createState() {
-    return _QRFirstViewState(this.Address,this.Room,this.ID);
+    return _QRFirstViewState(this.signCity, this.Address,this.signDate, this.fioExecutor, this.fioDirector,this.Room,this.ID);
   }
 }
 
 class _QRFirstViewState extends State<QRFirstView> {
+  String signCity;
+  String signDate;
+  String fioExecutor;
+  String fioDirector;
   String Address;
   String Room;
   String ID;
   QRViewController controller;
-  _QRFirstViewState(this.Address,this.Room, this.ID);
+  _QRFirstViewState(this.signCity, this.Address,this.signDate, this.fioExecutor, this.fioDirector,this.Room,this.ID);
 
   String armBarcode = "";
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
@@ -84,7 +92,8 @@ class _QRFirstViewState extends State<QRFirstView> {
                                 borderRadius: new BorderRadius.circular(30.0)
                             ),
                             onPressed: () => {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => QRSecondView(Address,Room,ID,armBarcode))),
+                              print(Room),
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => QRSecondView(signCity,Address,signDate,fioExecutor,fioDirector,Room,ID,armBarcode))),
                             },
                           )
                       ),
@@ -115,23 +124,31 @@ class _QRFirstViewState extends State<QRFirstView> {
  }
 
 class QRSecondView extends StatefulWidget {
+  String signCity;
+  String signDate;
+  String fioExecutor;
+  String fioDirector;
   String Address;
   String Room;
   String ID;
   String armBarcode;
-  QRSecondView(this.Address,this.Room,this.ID,this.armBarcode);
+  QRSecondView(this.signCity, this.Address,this.signDate, this.fioExecutor, this.fioDirector,this.Room,this.ID,this.armBarcode);
   @override
   State<StatefulWidget> createState() {
-    return _QRSecondViewState(this.Address,this.Room,this.ID,this.armBarcode);
+    return _QRSecondViewState(this.signCity, this.Address,this.signDate, this.fioExecutor, this.fioDirector,this.Room,this.ID,this.armBarcode);
   }
 }
 
 class _QRSecondViewState extends State<QRSecondView> {
+  String signCity;
+  String signDate;
+  String fioExecutor;
+  String fioDirector;
   String Address;
   String Room;
   String ID;
   String armBarcode;
-  _QRSecondViewState(this.Address,this.Room,this.ID,this.armBarcode);
+  _QRSecondViewState(this.signCity, this.Address,this.signDate, this.fioExecutor, this.fioDirector,this.Room,this.ID,this.armBarcode);
 
   QRViewController controller;
   String keyboardBarcode = "";
@@ -141,7 +158,7 @@ class _QRSecondViewState extends State<QRSecondView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Сканирование баркодов"),
+          title: Text("Ввод данных"),
           automaticallyImplyLeading: false,
           leading: IconButton(icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.pop(context, QRViewExample),
@@ -184,7 +201,8 @@ class _QRSecondViewState extends State<QRSecondView> {
                                     borderRadius: new BorderRadius.circular(30.0)
                                 ),
                                 onPressed: () => {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => QRThirdView(Address,Room,ID,armBarcode,keyboardBarcode))),
+                                  print(Room),
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => QRThirdView(signCity,Address,signDate,fioExecutor,fioDirector,Room,ID,armBarcode,keyboardBarcode))),
                                 },
                               )
                           )
@@ -215,27 +233,35 @@ class _QRSecondViewState extends State<QRSecondView> {
 }
 
 class QRThirdView extends StatefulWidget {
+  String signCity;
+  String signDate;
+  String fioExecutor;
+  String fioDirector;
   String Address;
   String Room;
   String ID;
   String armBarcode;
   String keyboardBarcode;
-  QRThirdView(this.Address,this.Room,this.ID,this.armBarcode,this.keyboardBarcode);
+  QRThirdView(this.signCity, this.Address,this.signDate, this.fioExecutor, this.fioDirector,this.Room,this.ID,this.armBarcode,this.keyboardBarcode);
 
   @override
   State<StatefulWidget> createState() {
-    return _QRThirdViewState(this.Address,this.Room,this.ID,this.armBarcode,this.keyboardBarcode);
+    return _QRThirdViewState(this.signCity, this.Address,this.signDate, this.fioExecutor, this.fioDirector,this.Room,this.ID,this.armBarcode,this.keyboardBarcode);
   }
 }
 
 class _QRThirdViewState extends State<QRThirdView>  {
+  String signCity;
+  String signDate;
+  String fioExecutor;
+  String fioDirector;
   String Address;
   String Room;
   String ID;
   String armBarcode;
   String keyboardBarcode;
   String mouseBarcode = "";
-  _QRThirdViewState(this.Address,this.Room,this.ID,this.armBarcode,this.keyboardBarcode);
+  _QRThirdViewState(this.signCity, this.Address,this.signDate, this.fioExecutor, this.fioDirector,this.Room,this.ID,this.armBarcode,this.keyboardBarcode);
 
   QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
@@ -281,14 +307,14 @@ class _QRThirdViewState extends State<QRThirdView>  {
                           Container(
                               margin: EdgeInsets.all(8),
                               child: RaisedButton (
-                                child: Text('Завершить', style: TextStyle(fontSize: 15)),
+                                child: Text('Завершить сканирование', style: TextStyle(fontSize: 15)),
                                 color: Colors.blue,
                                 shape: new RoundedRectangleBorder(
                                     borderRadius: new BorderRadius.circular(30.0)
                                 ),
                                 onPressed: () => {
-                                //_sendDataBack(context),
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => QRViewExample(Address,Room,ID,armBarcode,keyboardBarcode,mouseBarcode))),
+                                  print(Room),
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => QRViewExample(signCity,Address,signDate,fioExecutor,fioDirector,Room,ID,armBarcode,keyboardBarcode,mouseBarcode))),
                               },
                               )
                           )

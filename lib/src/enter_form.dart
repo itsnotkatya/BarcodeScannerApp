@@ -12,86 +12,34 @@ class ListItem {
   String name;
   ListItem(this.value, this.name);
 }
-
 class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
-  String Address = "Владивосток, ул Адмирала Горшкова, 3";
-  String Room;
-  final controller = TextEditingController();
+  String signCity;
+  String fioExecutor;
+  String fioDirector;
+  String Address = "";
   DateTime date = DateTime.now();
+  String signDate;
 
   List<ListItem> _dropdownItems = [
-    ListItem(1, "Владивосток, ул Адмирала Горшкова, 3"),
-    ListItem(2, "Владивосток, ул Адмирала Кузнецова, 64А"),
-    ListItem(3, "Владивосток, ул Борисенко, 31"),
-    ListItem(4, "Владивосток, ул Кирова, 66"),
-    ListItem(5, "Владивосток, ул Крыгина, 19"),
-    ListItem(6, "Владивосток, ул Можайская, 1Б"),
-    ListItem(7, "Владивосток, ул Приморская, 6"),
-    ListItem(8, "Владивосток, ул Светланская, 105"),
-    ListItem(9, "Владивосток, ул ул Спортивная, 11"),
-    ListItem(10, "Владивосток, ул Уборевича, 14"),
-    ListItem(11, "Владивосток, ул Уборевича, 30/37"),
-    ListItem(12, "Владивосток, ул Черёмуховая, 11"),
-    ListItem(13, "Владивосток, ул 50 лет ВЛКСМ, 17"),
-    ListItem(14, "Дальнереченск, ул Калинина, 72"),
-    ListItem(15, "Дальнереченск, ул Ленина, 34"),
-    ListItem(16, "Дальнереченск, ул Пушкина, 17А"),
-    ListItem(17, "Дальнереченск, ул Фадеева, 70А"),
-    ListItem(18, "Дальнереченск, ул Фадеева, 70В"),
-    ListItem(19, "Дальнереченск, ул Фадеева, 70"),
-    ListItem(20, "Леслзаводск, ул Калининская, 48"),
-    ListItem(21, "Лесозаводск, ул Куйбышева, 7"),
-    ListItem(22, "Лесозаводск, ул Октябрьская, 84"),
-    ListItem(23, "Лесозаводск, ул Пушкинская, дом 38"),
-    ListItem(24, "Лесозаводск, ул Пушкинская, дом 50"),
-    ListItem(25, "Лесозаводск, ул Степная, 3"),
-    ListItem(26, "Лесозаводск, ул 9 Января, 102А"),
-    ListItem(27, "Лесозаводск, ул 9 Января, 102А1"),
-    ListItem(28, "Лесозаводск, ул 9 Января, 102А2"),
-    ListItem(28, "Лесозаводск, ул 9 Января, 102Б"),
-    ListItem(29, "Лесозаводск, ул 9 Января, 102В"),
-    ListItem(30, "Лесозаводск, с. Пантелеймоновка, ул Центральная, 58а"),
-    ListItem(31, "п. Раздольное, ул Котовского, 1Г"),
-    ListItem(32, "п. Новый, ул Ленина, 12"),
-    ListItem(33, "п. Новый, ул Ленина, 13"),
-    ListItem(34, "п. Тавричанка, ул Лазо, 3"),
-    ListItem(35, "с. Вольно-Надеждинское, ул Железнодорожная, 9Б"),
-    ListItem(36, "с. Вольно-Надеждинское, ул Пушкина, 61"),
-    ListItem(37, "с. Вольно-Надеждинское, ул Пушкина, 61В"),
-    ListItem(38, "с. Вольно-Надеждинское, ул Р.Дрегиса, 9"),
-    ListItem(39, "Партизанск, ул Вахрушева, 6"),
-    ListItem(40, "Партизанск, ул Индустриальная, 20"),
-    ListItem(41, "Партизанск, ул Лазо, 4"),
-    ListItem(42, "Партизанск, ул Ленинская, 28"),
-    ListItem(43, "Партизанск, ул Ленинская, 28А"),
-    ListItem(44, "Партизанск, ул Ленинская, 30"),
-    ListItem(45, "Партизанск, ул Ленинская, 45"),
-    ListItem(46, "Партизанск, ул Павла Разгонова, 37"),
-    ListItem(47, "Партизанск, ул Щорса, 20"),
-    ListItem(48, "Партизанск, ул 50 лет ВЛКСМ, 28"),
-    ListItem(49, "Партизанск, с. Авангард, ул Кирова, 33"),
-    ListItem(50, "Партизанск, с. Авангард, ул Кирова, 39А"),
-    ListItem(51, "Партизанск, с. Углекаменск, п Больничный, 12А"),
-    ListItem(52, "Партизанск, с. Углекаменск, ул Калинина, 2"),
-    ListItem(53, "Партизанск, с. Углекаменск, ул Калинина, 2А"),
-    ListItem(54, "Спасск-Дальний, ул Дербенёва, 21"),
-    ListItem(55, "Спасск-Дальний, ул Дербенёва, 23А"),
-    ListItem(56, "Спасск-Дальний, ул Красногвардейская, 95А"),
-    ListItem(57, "Спасск-Дальний, ул Ленинская, 29"),
-    ListItem(58, "Спасск-Дальний, п Мухинский, 6"),
-    ListItem(59, "Спасск-Дальний, ул Парковая, 51"),
-    ListItem(60, "Спасск-Дальний, ул Советская, 43"),
-    ListItem(61, "с. Александровка, ул Партизанская, 54А"),
-    ListItem(62, "с. Новосельское, ул Центральная, 3А"),
-    ListItem(63, "с. Спасское, ул Хрещатинская, 68"),
-    ListItem(64, "с. Чкаловское, ул Ленина, 96")
+    ListItem(1, "Владивосток"),
+    ListItem(2, "Дальнереченск"),
+    ListItem(3, "Лесозаводск"),
+    ListItem(4, "Партизанск"),
+    ListItem(5, "Спасск-Дальний"),
+    ListItem(6, "п. Новый"),
+    ListItem(7, "п. Раздольное"),
+    ListItem(8, "п. Тавричанка"),
+    ListItem(9, "с. Вольно-Надеждинское"),
+    ListItem(10, "с. Новосельское"),
+    ListItem(11, "с. Чкаловское"),
+    ListItem(12, "с. Александровка"),
+    ListItem(13, "с. Спасское"),
   ];
-
   List<DropdownMenuItem<ListItem>> _dropdownMenuItems;
   ListItem _selectedItem;
 
   void initState() {
-    super.initState();
+    //super.initState();
     _dropdownMenuItems = buildDropDownMenuItems(_dropdownItems);
     _selectedItem = _dropdownMenuItems[0].value;
   }
@@ -109,14 +57,301 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
     return items;
   }
 
+  List<DropdownMenuItem<String>> menuitems = List();
+  bool disabledropdown = true;
+  final _formKey = GlobalKey<FormState>();
+
+  final Vladivostok = {
+    "1" : "Адмирала Горшкова, 3",
+    "2" : "Адмирала Кузнецова, 64А",
+    "3" : "Борисенко 31",
+    "4" : "Кирова, 66",
+    "5" : "Крыгина, 19",
+    "6" : "Можайская, 1б",
+    "7" : "Приморская, 6",
+    "8" : "Светланская, 105",
+    "9" : "Спортивная,  11",
+    "10" : "Уборевича, 14",
+    "11" : "Уборевича, 30/37",
+    "12" : "Черемуховая, 11",
+    "12" : "50 лет ВЛКСМ, 17",
+  };
+  final Dalnerechensk = {
+    "1" : "Калинина, 72",
+    "2" : "Ленина, 34",
+    "3" : "Пушкина, 17А",
+    "5" : "Фадеева, 70А",
+    "6" : "Фадеева, 70В",
+    "7" : "Фадеева, 70",
+  };
+  final Lesozavodsk = {
+    "1" : "Калининская, 48",
+    "2" : "Куйбышева, 7",
+    "3" : "Октябрьская, 84",
+    "4" : "Пушкинская, 38",
+    "5" : "Пушкинская, 50",
+    "6" : "Степная, 3",
+    "7" : "9 Января, 102А",
+    "8" : "9 Января, 102А1",
+    "9" : "9 Января, 102А2",
+    "10" : "9 Января, 102Б",
+    "11" : "9 Января, 102В",
+    "12" : "Центральная, 58A",
+  };
+  final Partizansk = {
+    "1" : "Вахрушева, 6",
+    "2" : "Индустриальная, 20",
+    "3" : "Лазо, 4",
+    "4" : "Ленинская, 28",
+    "5" : "Ленинская, 28A",
+    "6" : "Ленинская, 30",
+    "7" : "Ленинская, 45",
+    "8" : "Павла Разгонова, 37",
+    "9" : "Щорса, 20",
+    "10" : "с. Авангард, Кирова, 33",
+    "11" : "с. Углекаменск, п. Больничный, 12А",
+    "12" : "с. Углекаменск, Калинина, 2",
+    "13" : "с. Углекаменск, Калинина, 2А",
+    "14" : "50 лет ВЛКСМ, 28",
+  };
+  final Spassk = {
+    "1" : "Дербенёва, 21",
+    "2" : "Дербенёва, 23A",
+    "3" : "Красногвардейская, 95A",
+    "4" : "Ленинская, 29",
+    "5" : "Парковая, 51",
+    "6" : "Советская, 43",
+    "7" : "Ленинская, 29",
+    "8" : "п. Мухинский, 6",
+  };
+  final Novii = {
+    "1" : "Ленина, 12",
+    "2" : "Ленина, 13",
+  };
+  final VN = {
+    "1" : "Железнодорожная, 9Б",
+    "2" : "Пушкина, 61",
+    "3" : "Пушкина, 61В",
+    "4" : "Р.Дрегиса, 9",
+  };
+  final NovSel = {
+    "1" : "Центральная, 3A",
+  };
+  final Chkal = {
+    "1" : "Ленина, 96",
+  };
+  final Alex = {
+    "1" : "Партизанская, 54A",
+  };
+  final Spasskoe = {
+    "1" : "Хрещатинская, 68",
+  };
+  final Razdolnoe = {
+    "1" : "Котовского, 1Г"
+  };
+
+  void populateVladivostok(){
+    for(String key in Vladivostok.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text(Vladivostok[key]),
+        ),
+        value: Vladivostok[key],
+      ));
+    }
+  }
+  void populateDalnerechensk(){
+    for(String key in Dalnerechensk.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text(Dalnerechensk[key]),
+        ),
+        value: Dalnerechensk[key],
+      ));
+    }
+  }
+  void populateLesozavodsk(){
+    for(String key in  Lesozavodsk.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text( Lesozavodsk[key]),
+        ),
+        value:  Lesozavodsk[key],
+      ));
+    }
+  }
+  void populatePartizansk(){
+    for(String key in  Partizansk.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text( Partizansk[key]),
+        ),
+        value:  Partizansk[key],
+      ));
+    }
+  }
+  void populateSpassk(){
+    for(String key in Spassk.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text(Spassk[key]),
+        ),
+        value: Spassk[key],
+      ));
+    }
+  }
+  void populateNovii(){
+    for(String key in  Novii.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text( Novii[key]),
+        ),
+        value: Novii[key],
+      ));
+    }
+  }
+  void populateVN(){
+    for(String key in VN.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text( VN[key]),
+        ),
+        value: VN[key],
+      ));
+    }
+  }
+  void populateNovSel(){
+    for(String key in NovSel.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text( NovSel[key]),
+        ),
+        value: NovSel[key],
+      ));
+    }
+  }
+  void populateChkal(){
+    for(String key in  Chkal.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text(Chkal[key]),
+        ),
+        value:Chkal[key],
+      ));
+    }
+  }
+  void populateAlex(){
+    for(String key in  Alex.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text(  Alex[key]),
+        ),
+        value:  Alex[key],
+      ));
+    }
+  }
+  void populateSpasskoe(){
+    for(String key in  Spasskoe.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text(Spasskoe[key]),
+        ),
+        value:Spasskoe[key],
+      ));
+    }
+  }
+  void populateRazdolnoe(){
+    for(String key in  Razdolnoe.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text(Razdolnoe[key]),
+        ),
+        value:Razdolnoe[key],
+      ));
+    }
+  }
+  void selected(_value){
+    switch(_value) {
+      case "Владивосток" : {
+        menuitems = [];
+        populateVladivostok();
+        break;
+      }
+      case "Дальнереченск" : {
+        menuitems = [];
+        populateDalnerechensk();
+        break;
+      }
+      case "Лесозаводск" : {
+        menuitems = [];
+        populateLesozavodsk();
+        break;
+      }
+      case "Партизанск" : {
+        menuitems = [];
+        populatePartizansk();
+        break;
+      }
+      case "Спасск-Дальний" : {
+        menuitems = [];
+        populateSpassk();
+        break;
+      }
+      case "п. Новый" : {
+        menuitems = [];
+        populateNovii();
+        break;
+      }
+      case "с. Вольно-Надеждинское" : {
+        menuitems = [];
+        populateVN();
+        break;
+      }
+      case "с. Новосельское" : {
+        menuitems = [];
+        populateNovSel();
+        break;
+      }
+      case "с. Чкаловское" : {
+        menuitems = [];
+        populateChkal();
+        break;
+      }
+      case "с. Александровка" : {
+        menuitems = [];
+        populateAlex();
+        break;
+      }
+      case "с. Спасское" : {
+        menuitems = [];
+        populateSpasskoe();
+        break;
+      }
+      case "п. Раздольное" : {
+        menuitems = [];
+        populateRazdolnoe();
+        break;
+      }
+    }
+    setState(() {
+      signCity = _value;
+      disabledropdown = false;
+    });
+  }
+  void secondselected(_value){
+    setState(() {
+     Address = _value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _formKey,
       appBar: AppBar(
         title: Text('Ввод данных'),
       ),
-      body: SingleChildScrollView(
+      body: Form (
         child: Scrollbar(
           child: Align(
             alignment: Alignment.topCenter,
@@ -130,39 +365,68 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ...[
-                        SizedBox(
-                          width: 400,
-                            child: DropdownButton<ListItem>(
-                                value: _selectedItem,
-                                items: _dropdownMenuItems,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedItem = value;
-                                    Address = _selectedItem.name;
-                                  });
-                                }
-                            ),
+                        DropdownButton<ListItem>(
+                            value: _selectedItem,
+                            items: _dropdownMenuItems,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedItem = value;
+                                selected(_selectedItem.name);
+                                signCity = _selectedItem.name;
+                                print(signCity);
+                              });
+                            },
+                            hint: Text('Выберите населённый пункт'),
+                        ),
+                        DropdownButton<String>(
+                          items: menuitems,
+                          onChanged: disabledropdown ? null : (_value) {
+                            secondselected(_value);
+                            Address = _value;
+                            print(Address);
+                          },
+                          hint: Text('Адрес: ' + Address),
                         ),
                         TextFormField(
-                          //controller: controller,
-                          decoration: InputDecoration(
-                              labelText: '№ кабинета'
+                          enabled: true,
+                          decoration: InputDecoration (
+                            labelText: 'ФИО исполнителя',
                           ),
                           keyboardType: TextInputType.name,
                           onChanged: (String value) {
-                            Room = value;
+                            fioExecutor = value;
                           },
-                          // validator: (String value) {
-                          //   if (value.isEmpty) {
-                          //     return 'Необходимо заполнить поле';
-                          //   }
-                          // },
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Необходимо заполнить поле';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          enabled: true,
+                          decoration: InputDecoration (
+                            labelText: 'ФИО директора',
+                          ),
+                          keyboardType: TextInputType.name,
+                          onChanged: (String value) {
+                            fioDirector = value;
+                          },
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Необходимо заполнить поле';
+                            }
+                            return null;
+                          },
                         ),
                         _FormDatePicker(
                           date: date,
                           onChanged: (value) {
                             setState(() {
                               date = value;
+                              signDate = date.toString();
+                              print(signDate);
+
                             });
                           },
                         ),
@@ -194,9 +458,8 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                                         30.0)
                                 ),
                                 onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) =>
-                                          QRViewExample(Address,Room," "," "," ", "")));
+                                    signDate = date.toString();
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => QRViewExample(signCity,Address,signDate,fioExecutor,fioDirector,"","","","","")));
                                 },
                                 child: Text("Продолжить",
                                     style: TextStyle(fontSize: 15)),
