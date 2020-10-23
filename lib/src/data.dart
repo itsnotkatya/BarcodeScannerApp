@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:scan2/src/enter_form.dart';
 
@@ -40,6 +43,47 @@ class _FinalViewState extends State<FinalView> {
   initState() {
     super.initState();
   }
+
+  Future<ARM> createARM({Actmodel actmodel}) async {
+    final http.Response response = await http.post(
+      'http://ithelp.it4us.ru:8085/api/ARM/POST',
+      //'https://jsonplaceholder.typicode.com/albums',
+      headers: <String, String>{
+        "Content-type" : "application/x-www-form-urlencoded",
+      },
+      body: "="+jsonEncode(actmodel),
+    );
+    print(response.statusCode); //statusCode == 500
+    if (response.statusCode == 202) {
+      print(response.body);
+      return ARM.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to create album.');
+    }
+  }
+
+  Future<ARM> _futureARM;
+  List<ARM> options = new List<ARM>();
+
+  void sendData() {
+    var arm = new ARM(Address: Address,Room: Room,ID: ID,ArmBarcode: armBarcode,KeyboardBarcode: keyboardBarcode,MouseBarcode: mouseBarcode);
+    options.add(arm);
+    var actmodel = new Actmodel(fioExecutor,fioDirector,signCity,signDate,options);
+    _futureARM = createARM(actmodel: actmodel);
+    FutureBuilder<ARM>(
+      future: _futureARM,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Text(snapshot.data.Address);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return CircularProgressIndicator();
+      },
+    );
+
+  }
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,9 +179,9 @@ class _FinalViewState extends State<FinalView> {
                                 //itemExtent: 42
                               //scrollDirection: Axis.vertical,
                               Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               crossAxisAlignment: CrossAxisAlignment.center,
+                               children: <Widget>[
                                 Container(
                                   margin: EdgeInsets.all(8),
                                   child: RaisedButton(
@@ -146,6 +190,7 @@ class _FinalViewState extends State<FinalView> {
                                         borderRadius: new BorderRadius.circular(30.0)
                                     ),
                                     onPressed: () {
+                                        sendData();
                                       //Navigator.push(context, MaterialPageRoute(builder: (context) => FinalView(signCity,Address,signDate,fioExecutor,fioDirector,Room,ID,armBarcode,keyboardBarcode,mouseBarcode)));
                                     },
                                     child: Text('Отправить данные'),

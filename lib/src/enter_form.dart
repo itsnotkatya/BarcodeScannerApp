@@ -7,6 +7,40 @@ class FormWidgetsDemo extends StatefulWidget {
   _FormWidgetsDemoState createState() => _FormWidgetsDemoState();
 }
 
+class ARM {
+  final String Address;
+  final String Room;
+  final String ID;
+  final String ArmBarcode;
+  final String KeyboardBarcode;
+  final String MouseBarcode;
+
+  ARM({this.Address, this.Room, this.ID, this.ArmBarcode, this.KeyboardBarcode, this.MouseBarcode});
+
+  factory ARM.fromJson(Map<String, dynamic> json) {
+    return ARM(
+        Address: json['Address'],
+        Room: json['Room'],
+        ID: json['ID'],
+        ArmBarcode: json['ArmBarcode'],
+        KeyboardBarcode: json['KeyboardBarcode'],
+        MouseBarcode: json['MouseBarcode']
+    );
+  }
+}
+
+class Actmodel {
+  final String FIOexecutor;
+  final String FIOdirector;
+  final String SignDate;
+  final String SignCity;
+  final List<ARM> list = new List<ARM>();
+
+  Actmodel(this.FIOexecutor,this.FIOdirector,this.SignCity,this.SignDate,list) {
+    List<ARM> list = new List<ARM>();
+  }
+}
+
 class ListItem {
   int value = 1;
   String name;
@@ -347,11 +381,11 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _formKey,
       appBar: AppBar(
         title: Text('Ввод данных'),
       ),
       body: Form (
+        key: _formKey,
         child: Scrollbar(
           child: Align(
             alignment: Alignment.topCenter,
@@ -365,20 +399,21 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ...[
-                        DropdownButton<ListItem>(
-                            value: _selectedItem,
+                        DropdownButtonFormField<ListItem>(
+                            //value: _selectedItem,
                             items: _dropdownMenuItems,
                             onChanged: (value) {
                               setState(() {
                                 _selectedItem = value;
                                 selected(_selectedItem.name);
                                 signCity = _selectedItem.name;
-                                print(signCity);
                               });
                             },
                             hint: Text('Выберите населённый пункт'),
+                            validator: (value) => value == null
+                              ? 'Выберите населённый пункт': null,
                         ),
-                        DropdownButton<String>(
+                        DropdownButtonFormField<String>(
                           items: menuitems,
                           onChanged: disabledropdown ? null : (_value) {
                             secondselected(_value);
@@ -386,6 +421,8 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                             print(Address);
                           },
                           hint: Text('Адрес: ' + Address),
+                          validator: (value) => value == null
+                              ? 'Выберите адрес': null,
                         ),
                         TextFormField(
                           enabled: true,
@@ -459,7 +496,21 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                                 ),
                                 onPressed: () {
                                     signDate = date.toString();
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => QRViewExample(signCity,Address,signDate,fioExecutor,fioDirector,"","","","","")));
+                                    if (_formKey.currentState.validate()) {
+                                      Navigator.push(context, MaterialPageRoute(
+                                          builder: (context) =>
+                                              QRViewExample(
+                                                  signCity,
+                                                  Address,
+                                                  signDate,
+                                                  fioExecutor,
+                                                  fioDirector,
+                                                  "",
+                                                  "",
+                                                  "",
+                                                  "",
+                                                  "")));
+                                    };
                                 },
                                 child: Text("Продолжить",
                                     style: TextStyle(fontSize: 15)),

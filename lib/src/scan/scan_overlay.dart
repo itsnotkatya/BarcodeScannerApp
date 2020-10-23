@@ -345,4 +345,3 @@ class _QRThirdViewState extends State<QRThirdView>  {
 //     Navigator.push(context, MaterialPageRoute(builder: (context) => QRViewExample()));
 //   }
 }
-

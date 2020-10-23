@@ -1,11 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:scan2/src/data.dart';
-import '../enter_form.dart';
 import 'scan_overlay.dart';
 
 
@@ -45,7 +40,8 @@ class _QRViewExampleState extends State<QRViewExample> {
   _QRViewExampleState(this.signCity, this.Address,this.signDate, this.fioExecutor, this.fioDirector,this.Room,this.ID,this.armBarcode,this.keyboardBarcode,this.mouseBarcode);
 
   QRViewController controller;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  //final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final _formKey = GlobalKey<FormState>();
 
   @override
   initState() {
@@ -73,18 +69,22 @@ class _QRViewExampleState extends State<QRViewExample> {
             onPressed: () => Navigator.pop(context, false),
           )
       ),
-      body:ListView(
-        children: <Widget>[
-                 Column(
+      body: Container (
+             child: Form (
+                key: _formKey,
+                 child: ListView (
+                    children: <Widget> [
+                   Column(
+                     //key: _formKey,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       SingleChildScrollView(
                         padding: EdgeInsets.all(16),
-                         child: Column(
+                         child: Column (
                             mainAxisAlignment: MainAxisAlignment.center,
                              crossAxisAlignment: CrossAxisAlignment.center,
                              children: <Widget>[
-                               TextFormField(
+                                TextFormField(
                                  enabled: true,
                                  initialValue: Room,
                                  decoration: InputDecoration (
@@ -118,8 +118,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                                   return null;
                                 },
                             ),
-                               TextFormField(
-                                 enabled: false,
+                             TextFormField(
+                                 enabled: true,
                                  initialValue: armBarcode,
                                  decoration:  InputDecoration(
                                    labelText: 'Баркод системного блока',
@@ -131,8 +131,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                                    return null;
                                  },
                                ),
-                               TextFormField(
-                                 enabled: false,
+                           TextFormField(
+                                 enabled: true,
                                  initialValue: keyboardBarcode,
                                  decoration:  InputDecoration(
                                    labelText: 'Баркод клавиатуры',
@@ -144,8 +144,8 @@ class _QRViewExampleState extends State<QRViewExample> {
                                    return null;
                                  },
                                ),
-                               TextFormField(
-                                 enabled: false,
+                            TextFormField(
+                                 enabled: true,
                                  initialValue: mouseBarcode,
                                  decoration:  InputDecoration(
                                    labelText: 'Баркод компьютерной мыши',
@@ -157,7 +157,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                                    return null;
                                  },
                                 ),
-                               Row(
+                                Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                      children: <Widget>[
@@ -182,22 +182,39 @@ class _QRViewExampleState extends State<QRViewExample> {
                                                      borderRadius: new BorderRadius.circular(30.0)
                                                  ),
                                                 onPressed: () {
-                                                  Navigator.push(context, MaterialPageRoute(builder: (context) => FinalView(signCity,Address,signDate,fioExecutor,fioDirector,Room,ID,armBarcode,keyboardBarcode,mouseBarcode)));
+                                                  if (_formKey.currentState.validate()) {
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(
+                                                            builder: (
+                                                                context) =>
+                                                                FinalView(
+                                                                    signCity,
+                                                                    Address,
+                                                                    signDate,
+                                                                    fioExecutor,
+                                                                    fioDirector,
+                                                                    Room,
+                                                                    ID,
+                                                                    armBarcode,
+                                                                    keyboardBarcode,
+                                                                    mouseBarcode)));
+                                                  };
                                                 },
                                                  child: Text('Продолжить'),
                                               ),
                                            ),
                                      ],
                                ),
-
                           ]
                        )
 
                   ),
                 ]
                 ),
-        ]
+               ],
       ),
+      ),
+    ),
     );
   }
 }
