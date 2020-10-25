@@ -3,8 +3,14 @@ import 'package:intl/intl.dart' as intl;
 import 'scan/scan_form.dart';
 
 class FormWidgetsDemo extends StatefulWidget {
+  String signCity;
+  String fioExecutor;
+  String fioDirector;
+  String Address;
+
+  FormWidgetsDemo(this.signCity,this.Address,this.fioExecutor,this.fioDirector);
   @override
-  _FormWidgetsDemoState createState() => _FormWidgetsDemoState();
+  _FormWidgetsDemoState createState() => _FormWidgetsDemoState(this.signCity,this.Address,this.fioExecutor,this.fioDirector);
 }
 
 class ARM {
@@ -26,6 +32,17 @@ class ARM {
         KeyboardBarcode: json['KeyboardBarcode'],
         MouseBarcode: json['MouseBarcode']
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'Address': Address,
+      'Room': Room,
+      'ID' : ID,
+      'ArmBarcode' : ArmBarcode,
+      'KeyboardBarcode' :KeyboardBarcode,
+      'MouseBarcode' : MouseBarcode
+    };
   }
 }
 
@@ -53,6 +70,11 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
   String Address = "";
   DateTime date = DateTime.now();
   String signDate;
+
+  TextEditingController executor = TextEditingController();
+  TextEditingController director = TextEditingController();
+
+  _FormWidgetsDemoState(this.signCity,this.Address,this.fioExecutor,this.fioDirector);
 
   List<ListItem> _dropdownItems = [
     ListItem(1, "Владивосток"),
@@ -378,11 +400,16 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
     });
   }
 
+  void clearFields() {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Ввод данных'),
+        automaticallyImplyLeading: false,
       ),
       body: Form (
         key: _formKey,
@@ -400,7 +427,7 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                     children: [
                       ...[
                         DropdownButtonFormField<ListItem>(
-                            //value: _selectedItem,
+                            value: _selectedItem,
                             items: _dropdownMenuItems,
                             onChanged: (value) {
                               setState(() {
@@ -426,6 +453,8 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                         ),
                         TextFormField(
                           enabled: true,
+                          //controller: executor,
+                          initialValue: fioExecutor,
                           decoration: InputDecoration (
                             labelText: 'ФИО исполнителя',
                           ),
@@ -442,6 +471,8 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                         ),
                         TextFormField(
                           enabled: true,
+                          //controller: director,
+                          initialValue: fioDirector,
                           decoration: InputDecoration (
                             labelText: 'ФИО директора',
                           ),
@@ -471,21 +502,21 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.all(8),
-                              child: RaisedButton(
-                                color: Colors.blue,
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius: new BorderRadius.circular(
-                                        30.0)
-                                ),
-                                onPressed: () {
-
-                                },
-                                child: Text("Сохранить",
-                                    style: TextStyle(fontSize: 15)),
-                              ),
-                            ),
+                            // Container(
+                            //   margin: EdgeInsets.all(8),
+                            //   child: RaisedButton(
+                            //     color: Colors.blue,
+                            //     shape: new RoundedRectangleBorder(
+                            //         borderRadius: new BorderRadius.circular(
+                            //             30.0)
+                            //     ),
+                            //     onPressed: () {
+                            //         clearFields();
+                            //     },
+                            //     child: Text("Очистить",
+                            //         style: TextStyle(fontSize: 15)),
+                            //   ),
+                            // ),
                             Container(
                               margin: EdgeInsets.all(8),
                               child: RaisedButton(

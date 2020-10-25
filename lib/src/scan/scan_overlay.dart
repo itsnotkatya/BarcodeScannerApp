@@ -337,11 +337,4 @@ class _QRThirdViewState extends State<QRThirdView>  {
       });
     });
   }
-
-// get the text in the TextField and send it back to the FirstScreen
-//   void _sendDataBack(BuildContext context) {
-//     String textToSendBack = mouseBarcode;
-//     Navigator.pop(context, textToSendBack);
-//     Navigator.push(context, MaterialPageRoute(builder: (context) => QRViewExample()));
-//   }
 }

@@ -15,7 +15,7 @@ var fourthScreen = "/scan_overlay.dart";
 var fifthScreen = "/scan_overlay.dart";
 
 final routes = {
-  '/firstScreen': (BuildContext context) => new FormWidgetsDemo(),
+  '/firstScreen': (BuildContext context) => new FormWidgetsDemo("","","",""),
   //'/secondScreen': (BuildContext context) => new QRViewExample(" "," "," "," "," "," "),
   '/thirdScreen': (BuildContext context) => new QRFirstView("","","","","","",""),
   '/fourthScreen': (BuildContext context) => new QRSecondView("","","","","","","",""),
@@ -27,7 +27,7 @@ void main() => runApp(
         debugShowCheckedModeBanner: false,
         initialRoute: firstScreen,
         routes: {
-          firstScreen: (BuildContext context) => FormWidgetsDemo(),
+          firstScreen: (BuildContext context) => FormWidgetsDemo("","","",""),
           //secondScreen: (BuildContext context) => QRViewExample(" "," "," "," "," "," "),
           thirdScreen: (BuildContext context) => QRFirstView("","","","","","",""),
           fourthScreen: (BuildContext context) => new QRSecondView("","","","","","","",""),

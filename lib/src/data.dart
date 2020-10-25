@@ -36,7 +36,6 @@ class _FinalViewState extends State<FinalView> {
   String mouseBarcode;
 
   TextEditingController id = TextEditingController();
-
   _FinalViewState(this.signCity,this.Address,this.signDate,this.fioExecutor,this.fioDirector,this.Room,this.ID,this.armBarcode,this.keyboardBarcode,this.mouseBarcode);
 
   @override
@@ -53,9 +52,9 @@ class _FinalViewState extends State<FinalView> {
       },
       body: "="+jsonEncode(actmodel),
     );
-    print(response.statusCode); //statusCode == 500
+    print(response.statusCode);                         //statusCode == 500
     if (response.statusCode == 202) {
-      print(response.body);
+      print(response.body);                           //TODO: print data to file
       return ARM.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to create album.');
@@ -63,25 +62,25 @@ class _FinalViewState extends State<FinalView> {
   }
 
   Future<ARM> _futureARM;
-  List<ARM> options = new List<ARM>();
+  List<ARM> list = new List<ARM>();
 
   void sendData() {
     var arm = new ARM(Address: Address,Room: Room,ID: ID,ArmBarcode: armBarcode,KeyboardBarcode: keyboardBarcode,MouseBarcode: mouseBarcode);
-    options.add(arm);
-    var actmodel = new Actmodel(fioExecutor,fioDirector,signCity,signDate,options);
+    var actmodel = new Actmodel(fioExecutor,fioDirector,signCity,signDate,list);
+    list.add(arm);
+    String json = jsonEncode(list);
     _futureARM = createARM(actmodel: actmodel);
     FutureBuilder<ARM>(
       future: _futureARM,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Text(snapshot.data.Address);
+          return Text('Данные отправлены!');
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
         return CircularProgressIndicator();
       },
     );
-
   }
 
 
@@ -175,9 +174,6 @@ class _FinalViewState extends State<FinalView> {
                                     labelText: 'Баркод компьютерной мыши',
                                   ),
                                 ),
-
-                                //itemExtent: 42
-                              //scrollDirection: Axis.vertical,
                               Row(
                                mainAxisAlignment: MainAxisAlignment.center,
                                crossAxisAlignment: CrossAxisAlignment.center,
@@ -191,17 +187,28 @@ class _FinalViewState extends State<FinalView> {
                                     ),
                                     onPressed: () {
                                         sendData();
-                                      //Navigator.push(context, MaterialPageRoute(builder: (context) => FinalView(signCity,Address,signDate,fioExecutor,fioDirector,Room,ID,armBarcode,keyboardBarcode,mouseBarcode)));
+                                      //Navigator.push(context, MaterialPageRoute(builder: (context) => FormWidgetsDemo(signCity,Address,fioExecutor,fioDirector)));
                                     },
                                     child: Text('Отправить данные'),
                                   ),
                                 ),
+                                 // Container(
+                                 //   margin: EdgeInsets.all(8),
+                                 //   child: RaisedButton(
+                                 //     color: Colors.blue,
+                                 //     shape: new RoundedRectangleBorder(
+                                 //         borderRadius: new BorderRadius.circular(30.0)
+                                 //     ),
+                                 //     onPressed: () {
+                                 //       Navigator.push(context, MaterialPageRoute(builder: (context) => FormWidgetsDemo(signCity,Address,fioExecutor,fioDirector)));
+                                 //     },
+                                 //     child: Text('На главный экран'),
+                                 //   ),
+                                 //),
                               ],
                             ),
-
                           ]
                       )
-
                   ),
                 ]
             ),
