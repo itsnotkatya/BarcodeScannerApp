@@ -6,15 +6,19 @@ My chose of development tool fell on Flutter because this is a superior framewor
 
 My app starts with first form that asks user to choose city, address, today's date and to fill two more forms with execotor's name and director's name. This form also has validation, so it won't let you go to another screen while there are empty fields.
 
+<p float = "left">
 <img src="/screenshots/firstform.png" alt="first" width="300"/>
 <img src="/screenshots/firstformvalidation.png" alt="second" width="300"/>
 <img src="/screenshots/firstformfilled.png" alt="third" width="300"/>
+  </p>
 
 
 As soon as user got to the second screen, he sees another text form with validation that should be filled in.
 
+<p float = "left">
 <img src="/screenshots/secondform.png" alt="fourth" width="300"/>
-<img src="/screenshots/secondformvalidation.png.png" alt="fifth" width="300"/>
+<img src="/screenshots/secondformvalidation.png" alt="fifth" width="300"/>
+  </p>
 
 
 When button 'Сканировать' is pressed, a scanning process begins. User will have to scan three barcodes that will automaticlly add to fields.
@@ -23,9 +27,11 @@ When button 'Сканировать' is pressed, a scanning process begins. User
 
 Here are three scanning overlays:
 
+<p float = "left">
 <img src="/screenshots/firstoverlay.PNG" alt="seventh" width="300"/>
 <img src="/screenshots/secondoverlay.PNG" alt="eighth" width="300"/>
 <img src="/screenshots/thirdoverlay.PNG" alt="ninth" width="300"/>
+  </p>
 
 This is how form looks right after scanning:
 
@@ -33,8 +39,10 @@ This is how form looks right after scanning:
 
 After subbmittung and pressing the button 'Далее' user will get to the final form where all fields are enabled, after pressing on 'Отправить данные' button, all data is being sent to server with json file.
 
+<p float = "left">
 <img src="/screenshots/thirdform1.PNG" alt="eleventh" width="300"/>
 <img src="/screenshots/thirdform2.PNG" alt="twelveth" width="300"/>
+  </p>
 
 Here are the links on resourses that I used for my app:
 [online documentation](https://flutter.dev/docs), which offers tutorials,
