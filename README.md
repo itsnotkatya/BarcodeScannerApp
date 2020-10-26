@@ -17,15 +17,15 @@ As soon as user got to the second screen, he sees another text form with validat
 When button 'Сканировать' is pressed, a scanning process begins. User will have to scan three barcodes that will automaticlly add to fields.
 ![sixth](/screenshots/secondformsemifilled.png)
 Here are three scanning overlays:
-![seventh](/screenshots/firstoverlay.png)
-![eigth](/screenshots/secondoverlay.png)
-![ninth](/screenshots/thirdoverlay.png)
+![seventh](/screenshots/firstoverlay.PNG)
+![eigth](/screenshots/secondoverlay.PNG)
+![ninth](/screenshots/thirdoverlay.PNG)
 This is how form looks right after scanning:
-![ninth](/screenshots/secondformfilled.png)
+![ninth](/screenshots/secondformfilled.PNG)
 
 After subbmittung and pressing the button 'Далее' user will get to the final form where all fields are enabled, after pressing on 'Отправить данные' button, all data is being sent to server with json file.
-![tenth](/screenshots/thirdform1.png)
-![eleventh](/screenshots/thirdform2.png)
+![tenth](/screenshots/thirdform1.PNG)
+![eleventh](/screenshots/thirdform2.PNG)
 
 
 
