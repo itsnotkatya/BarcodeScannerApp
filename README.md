@@ -7,7 +7,7 @@ My chose of development tool fell on Flutter because this is a superior framewor
 My app starts with first form that asks user to choose city, address, today's date and to fill two more forms with execotor's name and director's name. This form also has validation, so it won't let you go to another screen while there are empty fields.
 
 <p float = "left">
-<img src="/screenshots/firstform.png" alt="first" width="300"/>
+<img src="/screenshots/firstform.png" alt="first" width="290"/>
 <img src="/screenshots/firstformvalidation.png" alt="second" width="300"/>
 <img src="/screenshots/firstformfilled.png" alt="third" width="300"/>
   </p>
