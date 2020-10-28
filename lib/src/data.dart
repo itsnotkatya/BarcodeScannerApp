@@ -46,15 +46,15 @@ class _FinalViewState extends State<FinalView> {
   Future<ARM> createARM({Actmodel actmodel}) async {
     final http.Response response = await http.post(
       'http://ithelp.it4us.ru:8085/api/ARM/POST',
-      //'https://jsonplaceholder.typicode.com/albums',
       headers: <String, String>{
         "Content-type" : "application/x-www-form-urlencoded",
+        "accept" : "application/octet-stream"
       },
       body: "="+jsonEncode(actmodel),
     );
     print(response.statusCode);                         //statusCode == 500
-    if (response.statusCode == 202) {
-      print(response.body);                           //TODO: print data to file
+    if (response.statusCode == 200) {
+      print(response.body);                             //TODO: print data to file
       return ARM.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to create album.');
@@ -64,10 +64,14 @@ class _FinalViewState extends State<FinalView> {
   Future<ARM> _futureARM;
   List<ARM> list = new List<ARM>();
 
-  void sendData() {
+  void sendData(String fioExecutor, String fioDirector, String signCity, String signDate) {
+
     var arm = new ARM(Address: Address,Room: Room,ID: ID,ArmBarcode: armBarcode,KeyboardBarcode: keyboardBarcode,MouseBarcode: mouseBarcode);
-    var actmodel = new Actmodel(fioExecutor,fioDirector,signCity,signDate,list);
+
     list.add(arm);
+
+    var actmodel = new Actmodel(fioExecutor,fioDirector,signCity,signDate,list);
+
     String json = jsonEncode(list);
     _futureARM = createARM(actmodel: actmodel);
     FutureBuilder<ARM>(
@@ -186,7 +190,7 @@ class _FinalViewState extends State<FinalView> {
                                         borderRadius: new BorderRadius.circular(30.0)
                                     ),
                                     onPressed: () {
-                                        sendData();
+                                        sendData(fioExecutor,fioExecutor,signCity,signDate);
                                       //Navigator.push(context, MaterialPageRoute(builder: (context) => FormWidgetsDemo(signCity,Address,fioExecutor,fioDirector)));
                                     },
                                     child: Text('Отправить данные'),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:intl/intl.dart';
 import 'scan/scan_form.dart';
+import 'package:date_format/date_format.dart';
 
 class FormWidgetsDemo extends StatefulWidget {
   String signCity;
@@ -71,9 +73,7 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
   DateTime date = DateTime.now();
   String signDate;
 
-  TextEditingController executor = TextEditingController();
-  TextEditingController director = TextEditingController();
-
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
   _FormWidgetsDemoState(this.signCity,this.Address,this.fioExecutor,this.fioDirector);
 
   List<ListItem> _dropdownItems = [
@@ -427,7 +427,7 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                     children: [
                       ...[
                         DropdownButtonFormField<ListItem>(
-                            value: _selectedItem,
+                            //  value: _selectedItem,
                             items: _dropdownMenuItems,
                             onChanged: (value) {
                               setState(() {
@@ -492,9 +492,6 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                           onChanged: (value) {
                             setState(() {
                               date = value;
-                              signDate = date.toString();
-                              print(signDate);
-
                             });
                           },
                         ),
@@ -502,21 +499,6 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            // Container(
-                            //   margin: EdgeInsets.all(8),
-                            //   child: RaisedButton(
-                            //     color: Colors.blue,
-                            //     shape: new RoundedRectangleBorder(
-                            //         borderRadius: new BorderRadius.circular(
-                            //             30.0)
-                            //     ),
-                            //     onPressed: () {
-                            //         clearFields();
-                            //     },
-                            //     child: Text("Очистить",
-                            //         style: TextStyle(fontSize: 15)),
-                            //   ),
-                            // ),
                             Container(
                               margin: EdgeInsets.all(8),
                               child: RaisedButton(
@@ -526,7 +508,8 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                                         30.0)
                                 ),
                                 onPressed: () {
-                                    signDate = date.toString();
+                                  signDate = (formatDate(DateTime(date.year, date.month, date.day, date.hour, date.minute, date.second), [yyyy, '-', mm, '-', dd, " ", HH, ':', nn, ':', ss]));
+                                  print(signDate);
                                     if (_formKey.currentState.validate()) {
                                       Navigator.push(context, MaterialPageRoute(
                                           builder: (context) =>

@@ -158,7 +158,7 @@ class _QRSecondViewState extends State<QRSecondView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Ввод данных"),
+          title: Text("Сканирование баркодов"),
           automaticallyImplyLeading: false,
           leading: IconButton(icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.pop(context, QRViewExample),
