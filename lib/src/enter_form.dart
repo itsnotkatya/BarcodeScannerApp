@@ -3,16 +3,21 @@ import 'package:intl/intl.dart' as intl;
 import 'package:intl/intl.dart';
 import 'scan/scan_form.dart';
 import 'package:date_format/date_format.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+// part 'actmodel.g.dart';
+// part 'arm.g.dart';
+
 
 class FormWidgetsDemo extends StatefulWidget {
   String signCity;
   String fioExecutor;
   String fioDirector;
-  String Address;
+  String Address = "";
 
-  FormWidgetsDemo(this.signCity,this.Address,this.fioExecutor,this.fioDirector);
+  FormWidgetsDemo(this.fioExecutor,this.fioDirector);
   @override
-  _FormWidgetsDemoState createState() => _FormWidgetsDemoState(this.signCity,this.Address,this.fioExecutor,this.fioDirector);
+  _FormWidgetsDemoState createState() => _FormWidgetsDemoState(this.fioExecutor,this.fioDirector);
 }
 
 class ARM {
@@ -48,16 +53,36 @@ class ARM {
   }
 }
 
-class Actmodel {
-  final String FIOexecutor;
-  final String FIOdirector;
-  final String SignDate;
-  final String SignCity;
-  final List<ARM> list = new List<ARM>();
+@JsonSerializable()
 
-  Actmodel(this.FIOexecutor,this.FIOdirector,this.SignCity,this.SignDate,list) {
-    List<ARM> list = new List<ARM>();
-  }
+class Actmodel {
+   String FIOexecutor;
+   String FIOdirector;
+   String SignDate;
+   String SignCity;
+   List<ARM> list = new List<ARM>();
+
+   Actmodel({this.FIOexecutor,this.FIOdirector,this.SignCity,this.SignDate,this.list});
+
+   factory Actmodel.fromJson(Map<String, dynamic> json) {
+     return Actmodel(
+         FIOexecutor: json['FIO_executor'],
+         FIOdirector: json['FIO_director'],
+         SignCity: json['signsity'],
+         SignDate: json['signdate'],
+         list: json['list']
+     );
+   }
+
+   Map<String, dynamic> toJson() {
+     return {
+       'FIO_executor': FIOexecutor,
+       'FIO_director': FIOdirector,
+       'signsity' : SignCity,
+       'signdate' : SignDate,
+       'list' : list
+     };
+   }
 }
 
 class ListItem {
@@ -74,7 +99,7 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
   String signDate;
 
   DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
-  _FormWidgetsDemoState(this.signCity,this.Address,this.fioExecutor,this.fioDirector);
+  _FormWidgetsDemoState(this.fioExecutor,this.fioDirector);
 
   List<ListItem> _dropdownItems = [
     ListItem(1, "Владивосток"),
@@ -119,90 +144,93 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
 
   final Vladivostok = {
     "1" : "Адмирала Горшкова, 3",
-    "2" : "Адмирала Кузнецова, 64А",
+    "2" : "улица Адмирала Кузнецова, 64А",
     "3" : "Борисенко 31",
-    "4" : "Кирова, 66",
-    "5" : "Крыгина, 19",
-    "6" : "Можайская, 1б",
-    "7" : "Приморская, 6",
-    "8" : "Светланская, 105",
-    "9" : "Спортивная,  11",
-    "10" : "Уборевича, 14",
-    "11" : "Уборевича, 30/37",
-    "12" : "Черемуховая, 11",
-    "12" : "50 лет ВЛКСМ, 17",
+    "4" : "улица Кирова,  66",
+    "5" : "улица Крыгина, 19",
+    "6" : "улица Можайская, 1б",
+    "7" : "улица Приморская, 6",
+    "8" : "улица Светланская, 105",
+    "9" : "улица Спортивная,  11",
+    "10" : "улица Уборевича, 14",
+    "11" : "улица Уборевича, 30/37",
+    "12" : "улица Черемуховая, 11",
+    "13" : "улица 50 лет ВЛКСМ, 17",
   };
   final Dalnerechensk = {
-    "1" : "Калинина, 72",
-    "2" : "Ленина, 34",
-    "3" : "Пушкина, 17А",
-    "5" : "Фадеева, 70А",
-    "6" : "Фадеева, 70В",
-    "7" : "Фадеева, 70",
+    "1" : "улица Калинина, 72",
+    "2" : "улица Ленина, 34",
+    "3" : "улица Пушкина, 17А",
+    "4" : "улица Фадеева, 70а",
+    "5" : "улица Фадеева, 70в",
+    "6" : "улица Фадеева, дом 70",
   };
   final Lesozavodsk = {
-    "1" : "Калининская, 48",
-    "2" : "Куйбышева, 7",
-    "3" : "Октябрьская, 84",
-    "4" : "Пушкинская, 38",
-    "5" : "Пушкинская, 50",
-    "6" : "Степная, 3",
-    "7" : "9 Января, 102А",
-    "8" : "9 Января, 102А1",
-    "9" : "9 Января, 102А2",
-    "10" : "9 Января, 102Б",
-    "11" : "9 Января, 102В",
-    "12" : "Центральная, 58A",
+    "1" : "улица Калининская, 48",
+    "2" : "улица Куйбышева, дом 7",
+    "3" : "улица Октябрьская, 84",
+    "4" : "улица Пушкинская, дом 38",
+    "5" : "улица Пушкинская, дом 50",
+    "6" : "улица Степная, 3",
+    "7" : "улица 9 Января, 102А",
+    "8" : "улица 9 Января, 102А1",
+    "9" : "улица 9 Января, 102А2",
+    "10" : "улица 9 Января, 102Б",
+    "11" : "улица 9 Января, 102В",
+    "12" : "с. Пантелеймоновка, улица Центральная, 58а",
   };
   final Partizansk = {
-    "1" : "Вахрушева, 6",
-    "2" : "Индустриальная, 20",
-    "3" : "Лазо, 4",
-    "4" : "Ленинская, 28",
-    "5" : "Ленинская, 28A",
-    "6" : "Ленинская, 30",
-    "7" : "Ленинская, 45",
-    "8" : "Павла Разгонова, 37",
-    "9" : "Щорса, 20",
-    "10" : "с. Авангард, Кирова, 33",
-    "11" : "с. Углекаменск, п. Больничный, 12А",
-    "12" : "с. Углекаменск, Калинина, 2",
-    "13" : "с. Углекаменск, Калинина, 2А",
-    "14" : "50 лет ВЛКСМ, 28",
+    "1" : "улица Вахрушева, 6",
+    "2" : "улица Индустриальная, 20",
+    "3" : "улица Лазо, 4",
+    "4" : "улица Ленинская, 28",
+    "5" : "улица Ленинская, 28а",
+    "6" : "улица Ленинская, 30",
+    "7" : "улица Ленинская, 45",
+    "8" : "улица Павла Разгонова, 37",
+    "9" : "улица Щорса, 20",
+    "10" : "с. Авангард, ул. Кирова, 33",
+    "11" : "с. Углекаменск, переулок Больничный, 12А",
+    "12" : "с. Углекаменск, улица Калинина, 2",
+    "13" : "с. Углекаменск, улица Калинина, 2А",
+    "14" : "улица 50 лет ВЛКСМ, 28",
   };
   final Spassk = {
-    "1" : "Дербенёва, 21",
-    "2" : "Дербенёва, 23A",
-    "3" : "Красногвардейская, 95A",
-    "4" : "Ленинская, 29",
-    "5" : "Парковая, 51",
-    "6" : "Советская, 43",
-    "7" : "п. Мухинский, 6",
+    "1" : "улица Дербенёва, 21",
+    "2" : "улица Дербенёва, дом 23а",
+    "3" : "улица Красногвардейская, дом 95а",
+    "4" : "улица Ленинская, 29",
+    "5" : "улица Парковая, 51",
+    "6" : "улица Советская, 43",
+    "7" : "переулок Мухинский, дом 6",
   };
   final Novii = {
-    "1" : "Ленина, 12",
-    "2" : "Ленина, 13",
+    "1" : "улица Ленина, 12",
+    "2" : "улица Ленина, 13",
   };
   final VN = {
-    "1" : "Железнодорожная, 9Б",
-    "2" : "Пушкина, 61",
-    "3" : "Пушкина, 61В",
-    "4" : "Р.Дрегиса, 9",
+    "1" : "улица Железнодорожная, 9Б",
+    "2" : "улица Пушкина, 61",
+    "3" : "улица Пушкина, 61В",
+    "4" : "улица Р.Дрегиса, 9",
   };
   final NovSel = {
-    "1" : "Центральная, 3A",
+    "1" : "улица Центральная, 3а",
   };
   final Chkal = {
-    "1" : "Ленина, 96",
+    "1" : "улица Ленина, 96",
   };
   final Alex = {
-    "1" : "Партизанская, 54A",
+    "1" : "улица Партизанская, 54а",
   };
   final Spasskoe = {
-    "1" : "Хрещатинская, 68",
+    "1" : "улица Хрещатинская, 68",
   };
   final Razdolnoe = {
-    "1" : "Котовского, 1Г"
+    "1" : "улица Котовского, дом 1Г"
+  };
+  final Tavr = {
+    "1" : "улица Лазо, 3"
   };
 
   void populateVladivostok(){
@@ -325,6 +353,16 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
       ));
     }
   }
+  void populateTavrichanka() {
+    for(String key in  Tavr.keys){
+      menuitems.add(DropdownMenuItem<String>(
+        child : Center(
+          child: Text(Tavr[key]),
+        ),
+        value:Tavr[key],
+      ));
+    }
+  }
   void selected(_value){
     switch(_value) {
       case "Владивосток" : {
@@ -387,6 +425,11 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
         populateRazdolnoe();
         break;
       }
+      case "п. Тавричанка" : {
+        menuitems = [];
+        populateTavrichanka();
+        break;
+      }
     }
     setState(() {
       signCity = _value;
@@ -439,7 +482,7 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                             validator: (value) => value == null
                               ? 'Выберите населённый пункт': null,
                         ),
-                        DropdownButtonFormField<String>(
+                         DropdownButtonFormField<String>(
                           items: menuitems,
                           onChanged: disabledropdown ? null : (_value) {
                             secondselected(_value);
@@ -508,6 +551,7 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                                 ),
                                 onPressed: () {
                                   signDate = (formatDate(DateTime(date.year, date.month, date.day, date.hour, date.minute, date.second), [yyyy, '-', mm, '-', dd, " ", HH, ':', nn, ':', ss]));
+                                  Address = signCity + ", " + Address;
                                   print(signDate);
                                     if (_formKey.currentState.validate()) {
                                       Navigator.push(context, MaterialPageRoute(

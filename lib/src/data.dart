@@ -62,18 +62,18 @@ class _FinalViewState extends State<FinalView> {
   }
 
   Future<ARM> _futureARM;
-  List<ARM> list = new List<ARM>();
 
   void sendData(String fioExecutor, String fioDirector, String signCity, String signDate) {
-
+    List<ARM> list = new List<ARM>();
     var arm = new ARM(Address: Address,Room: Room,ID: ID,ArmBarcode: armBarcode,KeyboardBarcode: keyboardBarcode,MouseBarcode: mouseBarcode);
 
     list.add(arm);
 
-    var actmodel = new Actmodel(fioExecutor,fioDirector,signCity,signDate,list);
+    Actmodel actmodel1 = new Actmodel(FIOexecutor: fioExecutor, FIOdirector: fioDirector, SignCity: signCity, SignDate: signDate, list: list);
 
-    String json = jsonEncode(list);
-    _futureARM = createARM(actmodel: actmodel);
+    String json = jsonEncode(actmodel1);
+
+    _futureARM = createARM(actmodel: actmodel1);
     FutureBuilder<ARM>(
       future: _futureARM,
       builder: (context, snapshot) {
@@ -115,9 +115,10 @@ class _FinalViewState extends State<FinalView> {
                                     labelText: 'Населённый пункт',
                                   ),
                                 ),
-                                TextFormField(
+                                 TextFormField(
                                   enabled: false,
                                   initialValue: Address,
+                                  maxLines: 2,
                                   decoration: InputDecoration (
                                     labelText: 'Адрес',
                                   ),
@@ -191,24 +192,11 @@ class _FinalViewState extends State<FinalView> {
                                     ),
                                     onPressed: () {
                                         sendData(fioExecutor,fioExecutor,signCity,signDate);
-                                      //Navigator.push(context, MaterialPageRoute(builder: (context) => FormWidgetsDemo(signCity,Address,fioExecutor,fioDirector)));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => FormWidgetsDemo(fioExecutor,fioDirector)));
                                     },
                                     child: Text('Отправить данные'),
                                   ),
                                 ),
-                                 // Container(
-                                 //   margin: EdgeInsets.all(8),
-                                 //   child: RaisedButton(
-                                 //     color: Colors.blue,
-                                 //     shape: new RoundedRectangleBorder(
-                                 //         borderRadius: new BorderRadius.circular(30.0)
-                                 //     ),
-                                 //     onPressed: () {
-                                 //       Navigator.push(context, MaterialPageRoute(builder: (context) => FormWidgetsDemo(signCity,Address,fioExecutor,fioDirector)));
-                                 //     },
-                                 //     child: Text('На главный экран'),
-                                 //   ),
-                                 //),
                               ],
                             ),
                           ]

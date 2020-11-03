@@ -182,6 +182,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                                                      borderRadius: new BorderRadius.circular(30.0)
                                                  ),
                                                 onPressed: () {
+                                                    print(mouseBarcode);
                                                   if (_formKey.currentState.validate()) {
                                                     Navigator.push(context,
                                                         MaterialPageRoute(
