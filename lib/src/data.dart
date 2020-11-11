@@ -54,7 +54,8 @@ class _FinalViewState extends State<FinalView> {
     );
     print(response.statusCode);                         //statusCode == 500
     if (response.statusCode == 200) {
-      print(response.body);                             //TODO: print data to file
+      print(response.body);
+      print(actmodel.toJson()); //TODO: print data to file
       return ARM.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to create album.');

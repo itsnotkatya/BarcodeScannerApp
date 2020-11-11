@@ -5,21 +5,8 @@ import 'scan/scan_form.dart';
 import 'package:date_format/date_format.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-// part 'actmodel.g.dart';
-// part 'arm.g.dart';
-
-
-class FormWidgetsDemo extends StatefulWidget {
-  String signCity;
-  String fioExecutor;
-  String fioDirector;
-  String Address = "";
-
-  FormWidgetsDemo(this.fioExecutor,this.fioDirector);
-  @override
-  _FormWidgetsDemoState createState() => _FormWidgetsDemoState(this.fioExecutor,this.fioDirector);
-}
-
+///part 'arm.g.dart';
+//@JsonSerializable()
 class ARM {
   final String Address;
   final String Room;
@@ -29,6 +16,9 @@ class ARM {
   final String MouseBarcode;
 
   ARM({this.Address, this.Room, this.ID, this.ArmBarcode, this.KeyboardBarcode, this.MouseBarcode});
+
+  // factory ARM.fromJson(Map<String, dynamic> json) => _$ARMFromJson(json);
+  // Map<String, dynamic> toJson() => _$ARMToJson(this);
 
   factory ARM.fromJson(Map<String, dynamic> json) {
     return ARM(
@@ -53,8 +43,7 @@ class ARM {
   }
 }
 
-@JsonSerializable()
-
+//@JsonSerializable(explicitToJson: true)
 class Actmodel {
    String FIOexecutor;
    String FIOdirector;
@@ -83,6 +72,17 @@ class Actmodel {
        'list' : list
      };
    }
+
+   // factory Actmodel.fromJson(Map<String, dynamic> json) => _$ActmodelFromJson(json);
+   // Map<String, dynamic> toJson() => _$ActmodelToJson(this);
+
+   // Map<String, dynamic> _$UserToJson(Actmodel instance) => <String, dynamic>{
+   //   'FIO_executor': instance.FIOexecutor,
+   //   'FIO_director': instance.FIOdirector,
+   //   'signsity' : instance.SignCity,
+   //   'signdate' : instance.SignDate,
+   //   'list' : instance.list
+   // };
 }
 
 class ListItem {
@@ -90,6 +90,18 @@ class ListItem {
   String name;
   ListItem(this.value, this.name);
 }
+
+class FormWidgetsDemo extends StatefulWidget {
+  String signCity;
+  String fioExecutor;
+  String fioDirector;
+  String Address = "";
+
+  FormWidgetsDemo(this.fioExecutor,this.fioDirector);
+  @override
+  _FormWidgetsDemoState createState() => _FormWidgetsDemoState(this.fioExecutor,this.fioDirector);
+}
+
 class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
   String signCity;
   String fioExecutor;
@@ -483,6 +495,7 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                               ? 'Выберите населённый пункт': null,
                         ),
                          DropdownButtonFormField<String>(
+                           isExpanded: true,
                           items: menuitems,
                           onChanged: disabledropdown ? null : (_value) {
                             secondselected(_value);
@@ -497,6 +510,7 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                           enabled: true,
                           //controller: executor,
                           initialValue: fioExecutor,
+                          textCapitalization: TextCapitalization.characters,
                           decoration: InputDecoration (
                             labelText: 'ФИО исполнителя',
                           ),
@@ -515,6 +529,7 @@ class _FormWidgetsDemoState extends State<FormWidgetsDemo> {
                           enabled: true,
                           //controller: director,
                           initialValue: fioDirector,
+                          textCapitalization: TextCapitalization.characters,
                           decoration: InputDecoration (
                             labelText: 'ФИО директора',
                           ),
